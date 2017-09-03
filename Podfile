@@ -12,5 +12,6 @@ target 'PinPos-Official' do
   pod 'DZNEmptyDataSet'
   pod 'Hue'
   pod "TextFieldEffects"
+  pod "Timepiece"
 
 end

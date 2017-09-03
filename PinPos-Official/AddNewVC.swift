@@ -32,6 +32,7 @@ class AddNewVC: UIViewController {
         navigationSetUp()
         setUpViews()
         addTextFields()
+        addNewBtn.addTarget(self, action: #selector(addNewPlace(_:)), for: .touchUpInside)
     }
 
 
@@ -84,6 +85,7 @@ extension AddNewVC{
         let placeHolders = ["Search For Your Place", "Name", "Address", "Longitude", "Latitude"]
         let icon:[FontType] = [FontType.linearIcons(.magnifier),FontType.linearIcons(.home),FontType.linearIcons(.location),FontType.linearIcons(.arrowUpCircle),FontType.linearIcons(.arrowRightCircle)]
         for f in fieldsArray {
+            f.delegate = self
             let index = fieldsArray.index(of: f)!
             f.placeholderColor = .darkGray
             f.placeholder = placeHolders[index]
@@ -108,4 +110,41 @@ extension AddNewVC{
         
     }
     
+    func addNewPlace(_ sender: UIButton) {
+        guard let name = nameField.text else{
+            showAlertForField(fieldname: "name")
+            return
+        }
+        guard let addr = addrField.text else{
+            showAlertForField(fieldname: "address")
+            return
+        }
+        guard let lat = Double(latField.text ?? "lat") else{
+            showAlertForField(fieldname: "latitude")
+            return
+        }
+        guard let lng = Double(lngField.text ?? "lng") else{
+            showAlertForField(fieldname: "longitude")
+            return
+        }
+        print("received place \(name), at \(addr), with lat:\(String(lat)), and lng: \(String(lng))")
+        self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[0]
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    func showAlertForField(fieldname:String){
+        let alertController = UIAlertController(title: "Error", message: "Please Enter Field for \(fieldname)", preferredStyle: .alert)
+        let defaultAction = UIAlertAction(title: "Got It", style: .default, handler: nil)
+        alertController.addAction(defaultAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+}
+
+extension AddNewVC:UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
+        return true
+    }
 }

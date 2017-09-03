@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PinPos-Official/AddNewVC.swift"
-            timestampString = "526099719.47973"
+            timestampString = "526162114.375206"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
             landmarkName = "setUpViews()"
             landmarkType = "7">
          </BreakpointContent>

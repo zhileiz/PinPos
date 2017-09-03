@@ -17,6 +17,8 @@
 		CF5057A71F5B288D0097B4A9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF5057A51F5B288D0097B4A9 /* LaunchScreen.storyboard */; };
 		CFF563861F5B6F7D009376BD /* ListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF563851F5B6F7D009376BD /* ListVC.swift */; };
 		CFF5638A1F5B7749009376BD /* AddNewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF563891F5B7749009376BD /* AddNewVC.swift */; };
+		CFF5638C1F5BABD9009376BD /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF5638B1F5BABD9009376BD /* Category.swift */; };
+		CFF5638E1F5BABFB009376BD /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF5638D1F5BABFB009376BD /* Place.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		CF5057A81F5B288D0097B4A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CFF563851F5B6F7D009376BD /* ListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListVC.swift; sourceTree = "<group>"; };
 		CFF563891F5B7749009376BD /* AddNewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewVC.swift; sourceTree = "<group>"; };
+		CFF5638B1F5BABD9009376BD /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		CFF5638D1F5BABFB009376BD /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +63,8 @@
 		CF3039941F5B55D600C1B7D7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				CFF5638B1F5BABD9009376BD /* Category.swift */,
+				CFF5638D1F5BABFB009376BD /* Place.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -228,6 +234,7 @@
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftIcons/SwiftIcons.framework",
 				"${BUILT_PRODUCTS_DIR}/TextFieldEffects/TextFieldEffects.framework",
+				"${BUILT_PRODUCTS_DIR}/Timepiece/Timepiece.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -238,6 +245,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftIcons.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TextFieldEffects.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Timepiece.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -269,9 +277,11 @@
 				CF50579C1F5B288D0097B4A9 /* MapVC.swift in Sources */,
 				CFF563861F5B6F7D009376BD /* ListVC.swift in Sources */,
 				CF3039981F5B561400C1B7D7 /* ChoiceView.swift in Sources */,
+				CFF5638E1F5BABFB009376BD /* Place.swift in Sources */,
 				CF5057A21F5B288D0097B4A9 /* PinPos_Official.xcdatamodeld in Sources */,
 				CF50579A1F5B288D0097B4A9 /* AppDelegate.swift in Sources */,
 				CFF5638A1F5B7749009376BD /* AddNewVC.swift in Sources */,
+				CFF5638C1F5BABD9009376BD /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

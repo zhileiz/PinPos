@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'AB06D4EC55F5182D040B2C0A072EBDA6'
-               BlueprintName = 'SwiftIcons-SwiftIcons'
+               BlueprintIdentifier = 'EA8D044119D683B4989D279AAC029A2A'
+               BlueprintName = 'Timepiece'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'SwiftIcons.bundle'>
+               BuildableName = 'Timepiece.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

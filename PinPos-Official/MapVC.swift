@@ -20,12 +20,17 @@ class MapVC: UIViewController {
     @IBOutlet weak var choiceView: UIView!
     @IBOutlet weak var categoryTable: UITableView!
     
+    let manager = CLLocationManager()
+    let authorizationStatus = CLLocationManager.authorizationStatus()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         mapViewAutoLayout()
         choiceViewAutoLayout()
         catTableViewAutoLayout()
         redrawTabBar()
+        manager.delegate = self
+        configureLocationServices()
     }
 }
 
@@ -36,6 +41,29 @@ extension MapVC:MKMapViewDelegate {
         mapView.snp.makeConstraints{(make) -> Void in
             make.edges.equalTo(view).inset(UIEdgeInsetsMake(0, 0, 40, 0))
         }
+    }
+    
+    func initialMapView(){
+        let loc = manager.location
+        let myLoc:CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: loc!.coordinate.latitude, longitude: loc!.coordinate.longitude)
+        let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+        let region = MKCoordinateRegion(center: myLoc, span: span)
+        mapView.setRegion(region, animated: true)
+        mapView.showsUserLocation = true
+    }
+    
+}
+
+extension MapVC:CLLocationManagerDelegate{
+    func configureLocationServices(){
+        if authorizationStatus == .notDetermined {
+            manager.requestAlwaysAuthorization()
+        } else {
+            return
+        }
+    }
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        initialMapView()
     }
     
 }
@@ -56,7 +84,6 @@ extension MapVC:UITableViewDelegate{
         categoryTable.layer.borderColor = UIColor(hex: "1364A5").cgColor
         categoryTable.isHidden = true
     }
-    
 }
 
 extension MapVC:UITableViewDataSource{
