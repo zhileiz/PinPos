@@ -11,5 +11,6 @@ target 'PinPos-Official' do
   pod 'SnapKit', '~> 3.2.0'
   pod 'DZNEmptyDataSet'
   pod 'Hue'
+  pod "TextFieldEffects"
 
 end

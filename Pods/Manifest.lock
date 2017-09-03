@@ -8,6 +8,7 @@ PODS:
     - Realm (= 2.9.1)
   - SnapKit (3.2.0)
   - SwiftIcons (1.5.1)
+  - TextFieldEffects (1.3.3)
 
 DEPENDENCIES:
   - DZNEmptyDataSet
@@ -15,6 +16,7 @@ DEPENDENCIES:
   - RealmSwift
   - SnapKit (~> 3.2.0)
   - SwiftIcons (~> 1.5.1)
+  - TextFieldEffects
 
 SPEC CHECKSUMS:
   DZNEmptyDataSet: 9525833b9e68ac21c30253e1d3d7076cc828eaa7
@@ -23,7 +25,8 @@ SPEC CHECKSUMS:
   RealmSwift: 207f12a4a36b696c5183c60a1c06d70234a23e56
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
   SwiftIcons: 287593643898af5a9ef16be4b1f9cf91a436cbc7
+  TextFieldEffects: 8706f53525f1ce51c8921b7af32237caab50c467
 
-PODFILE CHECKSUM: b8641d78350abc0a90fd30386e8ac63771fcea63
+PODFILE CHECKSUM: 0966e64785ea4ae9748e300a25c008de90fae965
 
 COCOAPODS: 1.3.0

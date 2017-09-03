@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreData
+import Hue
+import SnapKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +19,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let tabBarNormal = [
+            NSForegroundColorAttributeName:UIColor(hex:"D4D4D4"),
+            NSFontAttributeName:UIFont.init(name: "Avenir", size: 12)!
+        ] as [String : Any]
+        let tabBarSelected = [
+            NSForegroundColorAttributeName:UIColor.white,
+            NSFontAttributeName:UIFont.init(name: "Avenir", size: 12)!
+            ] as [String : Any]
+        UITabBarItem.appearance().setTitleTextAttributes(tabBarNormal, for: .normal)
+        UITabBarItem.appearance().setTitleTextAttributes(tabBarSelected, for: .selected)
         return true
     }
 

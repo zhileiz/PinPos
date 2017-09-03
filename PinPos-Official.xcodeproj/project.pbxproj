@@ -8,26 +8,32 @@
 
 /* Begin PBXBuildFile section */
 		3D2501D2CBEDDCA9A60088E0 /* Pods_PinPos_Official.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1EBB20A110BBE1C473290B85 /* Pods_PinPos_Official.framework */; };
+		CF3039981F5B561400C1B7D7 /* ChoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3039971F5B561400C1B7D7 /* ChoiceView.swift */; };
 		CF50579A1F5B288D0097B4A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF5057991F5B288D0097B4A9 /* AppDelegate.swift */; };
-		CF50579C1F5B288D0097B4A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF50579B1F5B288D0097B4A9 /* ViewController.swift */; };
+		CF50579C1F5B288D0097B4A9 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF50579B1F5B288D0097B4A9 /* MapVC.swift */; };
 		CF50579F1F5B288D0097B4A9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF50579D1F5B288D0097B4A9 /* Main.storyboard */; };
 		CF5057A21F5B288D0097B4A9 /* PinPos_Official.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CF5057A01F5B288D0097B4A9 /* PinPos_Official.xcdatamodeld */; };
 		CF5057A41F5B288D0097B4A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF5057A31F5B288D0097B4A9 /* Assets.xcassets */; };
 		CF5057A71F5B288D0097B4A9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF5057A51F5B288D0097B4A9 /* LaunchScreen.storyboard */; };
+		CFF563861F5B6F7D009376BD /* ListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF563851F5B6F7D009376BD /* ListVC.swift */; };
+		CFF5638A1F5B7749009376BD /* AddNewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF563891F5B7749009376BD /* AddNewVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		09802EBC46AA3FCA6F5F2C17 /* Pods-PinPos-Official.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PinPos-Official.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PinPos-Official/Pods-PinPos-Official.debug.xcconfig"; sourceTree = "<group>"; };
 		1EBB20A110BBE1C473290B85 /* Pods_PinPos_Official.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PinPos_Official.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		766BADC98C7FF13AD4B6704D /* Pods-PinPos-Official.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PinPos-Official.release.xcconfig"; path = "Pods/Target Support Files/Pods-PinPos-Official/Pods-PinPos-Official.release.xcconfig"; sourceTree = "<group>"; };
+		CF3039971F5B561400C1B7D7 /* ChoiceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoiceView.swift; sourceTree = "<group>"; };
 		CF5057961F5B288D0097B4A9 /* PinPos-Official.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PinPos-Official.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF5057991F5B288D0097B4A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CF50579B1F5B288D0097B4A9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CF50579B1F5B288D0097B4A9 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		CF50579E1F5B288D0097B4A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CF5057A11F5B288D0097B4A9 /* PinPos_Official.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PinPos_Official.xcdatamodel; sourceTree = "<group>"; };
 		CF5057A31F5B288D0097B4A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CF5057A61F5B288D0097B4A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CF5057A81F5B288D0097B4A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CFF563851F5B6F7D009376BD /* ListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListVC.swift; sourceTree = "<group>"; };
+		CFF563891F5B7749009376BD /* AddNewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +54,31 @@
 				1EBB20A110BBE1C473290B85 /* Pods_PinPos_Official.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CF3039941F5B55D600C1B7D7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		CF3039951F5B55E400C1B7D7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CF3039971F5B561400C1B7D7 /* ChoiceView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		CF3039961F5B55EF00C1B7D7 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CFF563851F5B6F7D009376BD /* ListVC.swift */,
+				CF50579B1F5B288D0097B4A9 /* MapVC.swift */,
+				CFF563891F5B7749009376BD /* AddNewVC.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		CF50578D1F5B288D0097B4A9 = {
@@ -71,8 +102,10 @@
 		CF5057981F5B288D0097B4A9 /* PinPos-Official */ = {
 			isa = PBXGroup;
 			children = (
+				CF3039961F5B55EF00C1B7D7 /* Controllers */,
+				CF3039951F5B55E400C1B7D7 /* Views */,
+				CF3039941F5B55D600C1B7D7 /* Models */,
 				CF5057991F5B288D0097B4A9 /* AppDelegate.swift */,
-				CF50579B1F5B288D0097B4A9 /* ViewController.swift */,
 				CF50579D1F5B288D0097B4A9 /* Main.storyboard */,
 				CF5057A31F5B288D0097B4A9 /* Assets.xcassets */,
 				CF5057A51F5B288D0097B4A9 /* LaunchScreen.storyboard */,
@@ -194,6 +227,7 @@
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftIcons/SwiftIcons.framework",
+				"${BUILT_PRODUCTS_DIR}/TextFieldEffects/TextFieldEffects.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -203,6 +237,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftIcons.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TextFieldEffects.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -231,9 +266,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF50579C1F5B288D0097B4A9 /* ViewController.swift in Sources */,
+				CF50579C1F5B288D0097B4A9 /* MapVC.swift in Sources */,
+				CFF563861F5B6F7D009376BD /* ListVC.swift in Sources */,
+				CF3039981F5B561400C1B7D7 /* ChoiceView.swift in Sources */,
 				CF5057A21F5B288D0097B4A9 /* PinPos_Official.xcdatamodeld in Sources */,
 				CF50579A1F5B288D0097B4A9 /* AppDelegate.swift in Sources */,
+				CFF5638A1F5B7749009376BD /* AddNewVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,6 +437,7 @@
 				CF5057AD1F5B288D0097B4A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
