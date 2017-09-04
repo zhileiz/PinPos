@@ -26,6 +26,7 @@ class AddNewVC: UIViewController {
     var lngField = HoshiTextField()
     var latField = HoshiTextField()
     
+    let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -127,7 +128,21 @@ extension AddNewVC{
             showAlertForField(fieldname: "longitude")
             return
         }
-        print("received place \(name), at \(addr), with lat:\(String(lat)), and lng: \(String(lng))")
+        let categories = realm.objects(Category.self)
+        if categories.count == 0 {
+            print ("!!! No Categories Yet !!!")
+            showAlertForField(fieldname: "!!!CATEGORY!!!")
+        } else {
+            var place = Place()
+            let category = categories.first!
+            print("Prepare to add to category: \(category.name)")
+            place.update(name: name, addr: addr, lng: lng, lat: lat, cat: category)
+            try! realm.write {
+                realm.add(place)
+                category.places.append(place)
+                print("received place \(place.name), at \(place.address), with lat:\(String(place.latitude)), and lng: \(String(place.longitude))")
+            }
+        }
         self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[0]
         self.navigationController?.popViewController(animated: true)
     }

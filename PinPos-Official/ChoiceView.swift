@@ -29,7 +29,7 @@ class ChoiceView: UIView {
             make.height.equalTo(50)
             make.width.equalTo(self.frame.width - 80)
             make.centerY.equalTo(self)
-            make.left.equalTo(choiceBtn).offset(10)
+            make.centerX.equalTo(self).offset(20)
         }
     }
     

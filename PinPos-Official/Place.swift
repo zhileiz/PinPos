@@ -12,12 +12,12 @@ import RealmSwift
 import Realm
 
 class Place: Object{
-    private(set) public var name:String = ""
-    private(set) public var address:String = ""
-    private(set) public var longitude:Double = 0.0
-    private(set) public var latitude:Double = 0.0
-    private(set) public var updatedAt:Date?
-    private(set) public var categoryName:String = ""
+    dynamic var name:String = ""
+    dynamic var address:String = ""
+    dynamic var longitude:Double = 0.0
+    dynamic var latitude:Double = 0.0
+    dynamic var updatedAt:Date?
+    dynamic var categoryName:String = ""
     
     func update(name:String, addr:String, lng:Double, lat:Double, cat:Category){
         self.name = name;

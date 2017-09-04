@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import SwiftIcons
+import Realm
 import RealmSwift
 import Hue
 import SnapKit
@@ -22,15 +23,49 @@ class MapVC: UIViewController {
     
     let manager = CLLocationManager()
     let authorizationStatus = CLLocationManager.authorizationStatus()
+    let realm = try! Realm()
+    let category = Category()
+    var categories = [Category]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        populateRealm()
         mapViewAutoLayout()
         choiceViewAutoLayout()
         catTableViewAutoLayout()
         redrawTabBar()
         manager.delegate = self
         configureLocationServices()
+        addMarkers()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        addMarkers()
+        categoryTable.reloadData()
+    }
+    
+    func tempAdd(){
+        let category1 = Category()
+        let category2 = Category()
+        let category3 = Category()
+        category.update(name: "Any", color: "1364A5")
+        category1.update(name: "Food", color: "FB9822")
+        category2.update(name: "Sight", color: "0D8915")
+        category3.update(name: "Life", color: "5910A7")
+        try! realm.write {
+            realm.add(category)
+            realm.add(category1)
+            realm.add(category2)
+            realm.add(category3)
+        }
+    }
+    
+    func populateRealm(){
+        let cats = realm.objects(Category.self)
+        for cat in cats{
+            print(cat.name)
+            self.categories.append(cat)
+        }
     }
 }
 
@@ -52,9 +87,24 @@ extension MapVC:MKMapViewDelegate {
         mapView.showsUserLocation = true
     }
     
+    func addMarkers(){
+        let annotations = mapView.annotations
+        mapView.removeAnnotations(annotations)
+        let locs = realm.objects(Place.self)
+        for loc in locs {
+            let coordinate = CLLocationCoordinate2D(latitude: loc.latitude, longitude: loc.longitude)
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            annotation.title = loc.name
+            annotation.subtitle = "lng:\(loc.longitude), lat:\(loc.latitude)"
+            mapView.addAnnotation(annotation)
+        }
+    }
+    
 }
 
 extension MapVC:CLLocationManagerDelegate{
+    
     func configureLocationServices(){
         if authorizationStatus == .notDetermined {
             manager.requestAlwaysAuthorization()
@@ -62,6 +112,7 @@ extension MapVC:CLLocationManagerDelegate{
             return
         }
     }
+    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         initialMapView()
     }
@@ -69,6 +120,7 @@ extension MapVC:CLLocationManagerDelegate{
 }
 
 extension MapVC:UITableViewDelegate{
+    
     func catTableViewAutoLayout(){
         categoryTable.delegate = self
         categoryTable.dataSource = self
@@ -83,17 +135,30 @@ extension MapVC:UITableViewDelegate{
         categoryTable.layer.borderWidth = 3
         categoryTable.layer.borderColor = UIColor(hex: "1364A5").cgColor
         categoryTable.isHidden = true
+        categoryTable.separatorStyle = .none
     }
+    
 }
 
 extension MapVC:UITableViewDataSource{
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return categories.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = categoryTable.dequeueReusableCell(withIdentifier: "cellId", for: indexPath)
-        return cell
+        let category = categories[indexPath.row]
+        print(category.name)
+        if let cell = categoryTable.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as? CategoryTableCell{
+            cell.setUpView(cat: category)
+            return cell
+        } else {
+            print("fail to draw")
+            return UITableViewCell()
+        }
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
     }
     
 }
@@ -134,5 +199,5 @@ extension MapVC {
             print("no such item")
         }
     }
+    
 }
-

@@ -13,9 +13,9 @@ import RealmSwift
 
 
 class Category:Object{
-    private(set) var name:String = ""
-    private(set) var color:String = "ffffff"
-    private(set) var places = List<Place>()
+    dynamic var name:String = ""
+    dynamic var color:String = "ffffff"
+    let places = List<Place>()
     
     func update(name:String, color:String){
         self.name = name
@@ -26,7 +26,7 @@ class Category:Object{
         places.append(place)
     }
     
-    func getPlaces() -> [Place]{
+    func getPlaces() -> List<Place>{
         return places
     }
     
