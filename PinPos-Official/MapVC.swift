@@ -30,6 +30,10 @@ class MapVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        try! realm.write {
+//            realm.deleteAll()
+//        }
+//        tempAdd()
         populateRealm()
         mapViewAutoLayout()
         choiceViewAutoLayout()

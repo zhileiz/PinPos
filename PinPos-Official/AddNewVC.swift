@@ -13,6 +13,7 @@ import RealmSwift
 import Realm
 import SnapKit
 import TextFieldEffects
+import MapKit
 
 class AddNewVC: UIViewController {
 
@@ -43,7 +44,9 @@ class AddNewVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
         tabBarController?.tabBar.barTintColor = UIColor(hex: "1364A5")
+        hideKeyboardWhenTappedAround()
     }
     
     func populateRealm(){
@@ -125,8 +128,33 @@ extension AddNewVC{
                 make.height.equalTo(40)
             }
         }
+        searchField.addTarget(self, action: #selector(jump(_:)), for: .editingDidBegin)
         
     }
+    
+    func jump(_ sender: UITextField){
+        searchField.endEditing(true)
+        performSegue(withIdentifier: "toSearchSegue", sender: sender)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toSearchSegue"{
+            if let searchVC = segue.destination as? SearchVC{
+                searchVC.sourceVC = self
+            }
+        }
+    }
+    
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
     
     func addNewPlace(_ sender: UIButton) {
         guard let name = nameField.text else{
@@ -183,6 +211,7 @@ extension AddNewVC{
 
 extension AddNewVC:UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print("returned")
         view.endEditing(true)
         return true
     }
