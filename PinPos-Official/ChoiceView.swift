@@ -18,6 +18,7 @@ class ChoiceView: UIView {
     let size = CGSize(width: 30, height: 30)
     var counter = 0
     var catTable: UITableView?
+    var colorHex = "1364A5"
 
     func setUpText(title:String){
         typeLabel.text = title
@@ -46,8 +47,8 @@ class ChoiceView: UIView {
     }
     
     func btnAction(_ sender: UIButton){
-        let img = UIImage.init(icon: .fontAwesome(.chevronCircleDown), size: size, textColor: UIColor(hex: "1364A5"))
-        let img2 = UIImage.init(icon: .fontAwesome(.chevronCircleUp), size: size, textColor: UIColor(hex: "1364A5"))
+        let img = UIImage.init(icon: .fontAwesome(.chevronCircleDown), size: size, textColor: UIColor(hex: colorHex))
+        let img2 = UIImage.init(icon: .fontAwesome(.chevronCircleUp), size: size, textColor: UIColor(hex: colorHex))
         if counter % 2 == 0 {
             self.choiceBtn.setImage(img2, for: .normal)
             catTable?.isHidden = false
@@ -61,6 +62,14 @@ class ChoiceView: UIView {
     func setUp(){
         setUpImg()
         setUpText(title: "Any(10)")
+    }
+    
+    func setUpByCategory(cat:Category){
+        colorHex = cat.color
+        typeLabel.textColor = UIColor(hex: cat.color)
+        typeLabel.text = "\(cat.name)(\(cat.getPlaces().count))"
+        let img = UIImage.init(icon: .fontAwesome(.chevronCircleDown), size: size, textColor: UIColor(hex: cat.color))
+        choiceBtn.setImage(img, for: .normal)
     }
 
 

@@ -24,8 +24,9 @@ class MapVC: UIViewController {
     let manager = CLLocationManager()
     let authorizationStatus = CLLocationManager.authorizationStatus()
     let realm = try! Realm()
-    let category = Category()
+    var category = Category()
     var categories = [Category]()
+    var activeCategory = Category()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,12 +38,15 @@ class MapVC: UIViewController {
         manager.delegate = self
         configureLocationServices()
         addMarkers()
+        activeCategory = category
     }
     
     override func viewWillAppear(_ animated: Bool) {
         addMarkers()
         categoryTable.reloadData()
+        redrawByCategory(cat: activeCategory)
     }
+    
     
     func tempAdd(){
         let category1 = Category()
@@ -62,6 +66,7 @@ class MapVC: UIViewController {
     
     func populateRealm(){
         let cats = realm.objects(Category.self)
+        self.category = cats.first!
         for cat in cats{
             print(cat.name)
             self.categories.append(cat)
@@ -138,6 +143,23 @@ extension MapVC:UITableViewDelegate{
         categoryTable.separatorStyle = .none
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cat = categories[indexPath.row]
+        redrawByCategory(cat: cat)
+    }
+    
+    func redrawByCategory(cat:Category){
+        activeCategory = cat
+        let hex = cat.color
+        categoryTable.layer.borderColor = UIColor(hex: hex).cgColor
+        tabBarController?.tabBar.barTintColor = UIColor(hex: hex)
+        choiceView.layer.borderColor = UIColor(hex: hex).cgColor
+        if let tempView = choiceView as? ChoiceView{
+            tempView.setUpByCategory(cat: cat)
+        }
+        categoryTable.isHidden = true
+    }
+    
 }
 
 extension MapVC:UITableViewDataSource{
@@ -157,6 +179,7 @@ extension MapVC:UITableViewDataSource{
             return UITableViewCell()
         }
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
@@ -179,6 +202,7 @@ extension MapVC {
         if let thisView = choiceView as? ChoiceView{
             thisView.setUp()
             thisView.catTable = categoryTable
+            thisView.setUpByCategory(cat: category)
         } else {
             print("cannot cast")
         }

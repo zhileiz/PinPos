@@ -16,6 +16,7 @@
 		CF5057A41F5B288D0097B4A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF5057A31F5B288D0097B4A9 /* Assets.xcassets */; };
 		CF5057A71F5B288D0097B4A9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF5057A51F5B288D0097B4A9 /* LaunchScreen.storyboard */; };
 		CF5C23531F5CB437009D629B /* CategoryTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF5C23521F5CB437009D629B /* CategoryTableCell.swift */; };
+		CF5C23551F5CF065009D629B /* CategoryCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF5C23541F5CF065009D629B /* CategoryCollectionCell.swift */; };
 		CFF563861F5B6F7D009376BD /* ListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF563851F5B6F7D009376BD /* ListVC.swift */; };
 		CFF5638A1F5B7749009376BD /* AddNewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF563891F5B7749009376BD /* AddNewVC.swift */; };
 		CFF5638C1F5BABD9009376BD /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF5638B1F5BABD9009376BD /* Category.swift */; };
@@ -36,6 +37,7 @@
 		CF5057A61F5B288D0097B4A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CF5057A81F5B288D0097B4A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CF5C23521F5CB437009D629B /* CategoryTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryTableCell.swift; sourceTree = "<group>"; };
+		CF5C23541F5CF065009D629B /* CategoryCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCollectionCell.swift; sourceTree = "<group>"; };
 		CFF563851F5B6F7D009376BD /* ListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListVC.swift; sourceTree = "<group>"; };
 		CFF563891F5B7749009376BD /* AddNewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewVC.swift; sourceTree = "<group>"; };
 		CFF5638B1F5BABD9009376BD /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 			children = (
 				CF5C23521F5CB437009D629B /* CategoryTableCell.swift */,
 				CF3039971F5B561400C1B7D7 /* ChoiceView.swift */,
+				CF5C23541F5CF065009D629B /* CategoryCollectionCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -282,6 +285,7 @@
 				CF5C23531F5CB437009D629B /* CategoryTableCell.swift in Sources */,
 				CF3039981F5B561400C1B7D7 /* ChoiceView.swift in Sources */,
 				CFF5638E1F5BABFB009376BD /* Place.swift in Sources */,
+				CF5C23551F5CF065009D629B /* CategoryCollectionCell.swift in Sources */,
 				CF5057A21F5B288D0097B4A9 /* PinPos_Official.xcdatamodeld in Sources */,
 				CF50579A1F5B288D0097B4A9 /* AppDelegate.swift in Sources */,
 				CFF5638A1F5B7749009376BD /* AddNewVC.swift in Sources */,

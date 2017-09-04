@@ -27,16 +27,29 @@ class AddNewVC: UIViewController {
     var latField = HoshiTextField()
     
     let realm = try! Realm()
+    var categories = [Category]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        populateRealm()
         navigationSetUp()
         setUpViews()
         addTextFields()
         addNewBtn.addTarget(self, action: #selector(addNewPlace(_:)), for: .touchUpInside)
+        populateRealm()
     }
-
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tabBarController?.tabBar.barTintColor = UIColor(hex: "1364A5")
+    }
+    
+    func populateRealm(){
+        let cats = realm.objects(Category.self)
+        for cat in cats{
+            print("from addNew Page:\(cat.name)")
+            self.categories.append(cat)
+        }
+    }
 }
 
 extension AddNewVC{

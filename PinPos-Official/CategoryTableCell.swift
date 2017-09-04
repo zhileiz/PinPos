@@ -33,12 +33,14 @@ class CategoryTableCell: UITableViewCell {
         let bgColorView = UIView()
         bgColorView.backgroundColor = UIColor(hex: hex).alpha(0.1)
         self.selectedBackgroundView = bgColorView
-        if cat.name == "food"{
+        if cat.name == "Food"{
             catgoryImg.image = UIImage(icon: .ionicons(.fork), size: CGSize(width:25,height:25), textColor: UIColor(hex:hex))
-        } else if cat.name == "sight"{
+        } else if cat.name == "Sight"{
             catgoryImg.image = UIImage(icon: .ionicons(.eye), size: CGSize(width:25,height:25), textColor: UIColor(hex:hex))
-        } else{
+        } else if cat.name == "Life"{
             catgoryImg.image = UIImage(icon: .ionicons(.filmMaker), size: CGSize(width:25,height:25), textColor: UIColor(hex:hex))
+        } else {
+            catgoryImg.image = UIImage(icon: .ionicons(.pin), size: CGSize(width:25,height:25), textColor: UIColor(hex:hex))
         }
         catgoryImg.snp.makeConstraints{ (make) -> Void in
             make.centerY.equalTo(self.contentView)

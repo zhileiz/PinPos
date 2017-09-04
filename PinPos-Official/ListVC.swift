@@ -25,6 +25,10 @@ class ListVC: UITableViewController {
             item.setIcon(icon: .icofont(.pencilAlt2), iconSize: 20, color: UIColor(hex: "1364A5"))
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tabBarController?.tabBar.barTintColor = UIColor(hex: "1364A5")
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
