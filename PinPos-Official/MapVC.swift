@@ -97,13 +97,35 @@ extension MapVC:MKMapViewDelegate {
         mapView.removeAnnotations(annotations)
         let locs = realm.objects(Place.self)
         for loc in locs {
-            let coordinate = CLLocationCoordinate2D(latitude: loc.latitude, longitude: loc.longitude)
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = coordinate
-            annotation.title = loc.name
-            annotation.subtitle = "lng:\(loc.longitude), lat:\(loc.latitude)"
-            mapView.addAnnotation(annotation)
+            if loc.categoryName == activeCategory.name || activeCategory.name == "Any" {
+                let coordinate = CLLocationCoordinate2D(latitude: loc.latitude, longitude: loc.longitude)
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = coordinate
+                annotation.title = loc.name
+                annotation.subtitle = "lng:\(loc.longitude), lat:\(loc.latitude)"
+                let pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pin")
+                mapView.addAnnotation(pinAnnotationView.annotation!)
+            }
         }
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let hex = activeCategory.color
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "pin")
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "pin")
+            annotationView?.canShowCallout = true
+        } else {
+            annotationView?.annotation = annotation
+        }
+        
+        if !(annotation is MKUserLocation){
+        annotationView?.image = UIImage(icon: .ionicons(.location), size: CGSize(width:50,height:50), textColor: UIColor(hex:hex))
+        } else {
+            annotationView?.image = #imageLiteral(resourceName: "myLoc")
+        }
+        
+        return annotationView
     }
     
 }
@@ -158,6 +180,7 @@ extension MapVC:UITableViewDelegate{
             tempView.setUpByCategory(cat: cat)
         }
         categoryTable.isHidden = true
+        addMarkers()
     }
     
 }

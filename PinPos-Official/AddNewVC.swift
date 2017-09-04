@@ -28,6 +28,8 @@ class AddNewVC: UIViewController {
     
     let realm = try! Realm()
     var categories = [Category]()
+    var selectedCategory = Category()
+    var anyCategory = Category()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +38,8 @@ class AddNewVC: UIViewController {
         setUpViews()
         addTextFields()
         addNewBtn.addTarget(self, action: #selector(addNewPlace(_:)), for: .touchUpInside)
-        populateRealm()
+        catsView.delegate = self
+        catsView.dataSource = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,6 +48,7 @@ class AddNewVC: UIViewController {
     
     func populateRealm(){
         let cats = realm.objects(Category.self)
+        anyCategory = cats.first!
         for cat in cats{
             print("from addNew Page:\(cat.name)")
             self.categories.append(cat)
@@ -145,14 +149,21 @@ extension AddNewVC{
         if categories.count == 0 {
             print ("!!! No Categories Yet !!!")
             showAlertForField(fieldname: "!!!CATEGORY!!!")
-        } else {
+            return
+        } else if selectedCategory.name == ""{
+            showAlertForField(fieldname: "category")
+            return
+        }else {
             var place = Place()
-            let category = categories.first!
+            let category = selectedCategory
             print("Prepare to add to category: \(category.name)")
             place.update(name: name, addr: addr, lng: lng, lat: lat, cat: category)
             try! realm.write {
                 realm.add(place)
                 category.places.append(place)
+                if (category.name != "Any"){
+                    anyCategory.places.append(place)
+                }
                 print("received place \(place.name), at \(place.address), with lat:\(String(place.latitude)), and lng: \(String(place.longitude))")
             }
         }
@@ -174,5 +185,32 @@ extension AddNewVC:UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         view.endEditing(true)
         return true
+    }
+}
+
+extension AddNewVC:UICollectionViewDelegate, UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cat = categories[indexPath.row]
+        if let cell = catsView.dequeueReusableCell(withReuseIdentifier: "itemId", for: indexPath) as? CategoryCollectionCell{
+            cell.setUpView(cat: cat)
+            return cell
+        } else {
+            print("could not draw item")
+            return UICollectionViewCell()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return categories.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
+    {
+        return CGSize(width: 80.0, height: 120.0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedCategory = categories[indexPath.row]
+        print("selected: \(selectedCategory.name)")
     }
 }
