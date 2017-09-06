@@ -28,12 +28,10 @@ class MapVC: UIViewController {
     var categories = [Category]()
     var activeCategory = Category()
     
+    var pathOnView:MKOverlay?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        try! realm.write {
-//            realm.deleteAll()
-//        }
-//        tempAdd()
         populateRealm()
         mapViewAutoLayout()
         choiceViewAutoLayout()
@@ -49,6 +47,12 @@ class MapVC: UIViewController {
         addMarkers()
         categoryTable.reloadData()
         redrawByCategory(cat: activeCategory)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if pathOnView != nil {
+            mapView.remove(pathOnView!)
+        }
     }
     
     
@@ -83,7 +87,7 @@ extension MapVC:MKMapViewDelegate {
     func mapViewAutoLayout(){
         mapView.delegate = self;
         mapView.snp.makeConstraints{(make) -> Void in
-            make.edges.equalTo(view).inset(UIEdgeInsetsMake(0, 0, 40, 0))
+            make.edges.equalTo(view).inset(UIEdgeInsetsMake(0, 0, 0, 0))
         }
     }
     
@@ -106,7 +110,7 @@ extension MapVC:MKMapViewDelegate {
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = coordinate
                 annotation.title = loc.name
-                annotation.subtitle = "lng:\(loc.longitude), lat:\(loc.latitude)"
+                annotation.subtitle = loc.address
                 let pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pin")
                 mapView.addAnnotation(pinAnnotationView.annotation!)
             }
@@ -116,49 +120,46 @@ extension MapVC:MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let hex = activeCategory.color
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "pin")
-        if annotationView == nil {
+        if (annotationView == nil && !(annotation is MKUserLocation)) {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "pin")
             annotationView?.canShowCallout = true
+            let btn = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+            let img = UIImage(icon: .ionicons(.androidWalk), size: CGSize(width:40,height:40), textColor: UIColor(hex:activeCategory.color))
+            btn.setImage(img, for: .normal)
+            annotationView?.leftCalloutAccessoryView = btn
         } else {
             annotationView?.annotation = annotation
         }
         
         if !(annotation is MKUserLocation){
         annotationView?.image = UIImage(icon: .ionicons(.location), size: CGSize(width:50,height:50), textColor: UIColor(hex:hex))
+            annotationView?.canShowCallout = true
+            let btn = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+//            btn.addTarget(self, action: #selector(navigate), for: .touchUpInside)
+            let img = UIImage(icon: .ionicons(.androidWalk), size: CGSize(width:40,height:40), textColor: UIColor(hex:activeCategory.color))
+            btn.setImage(img, for: .normal)
+            annotationView?.leftCalloutAccessoryView = btn
         } else {
             annotationView?.image = #imageLiteral(resourceName: "myLoc")
-        }
-        configureDetailView(annotationView: annotationView!)
-        
+        }        
         return annotationView
     }
     
-    func configureDetailView(annotationView: MKAnnotationView) {
-        let width = 300
-        let height = 200
-        
-        let snapshotView = UIView()
-        let views = ["snapshotView": snapshotView]
-        snapshotView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[snapshotView(300)]", options: [], metrics: nil, views: views))
-        snapshotView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[snapshotView(200)]", options: [], metrics: nil, views: views))
-        
-        let options = MKMapSnapshotOptions()
-        options.size = CGSize(width: width, height: height)
-        options.mapType = .satelliteFlyover
-        options.camera = MKMapCamera(lookingAtCenter: annotationView.annotation!.coordinate, fromDistance: 250, pitch: 65, heading: 0)
-        
-        let snapshotter = MKMapSnapshotter(options: options)
-        snapshotter.start { snapshot, error in
-            if snapshot != nil {
-                let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: width, height: height))
-                imageView.image = snapshot!.image
-                snapshotView.addSubview(imageView)
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        mapView.setCenter((view.annotation?.coordinate)!, animated: true)
+    }
+    
+    func navigate(){
+        print("Navigate!")
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        if control == view.leftCalloutAccessoryView{
+            if pathOnView != nil {
+                mapView.remove(pathOnView!)
             }
+            getRouteTo(coordinate: (view.annotation?.coordinate)!)
         }
-        
-        annotationView.detailCalloutAccessoryView = snapshotView
-        annotationView.detailCalloutAccessoryView?.layer.borderColor = UIColor(hex: activeCategory.color).cgColor
-        annotationView.detailCalloutAccessoryView?.layer.borderWidth = 2
     }
     
 }
@@ -280,4 +281,61 @@ extension MapVC {
         }
     }
     
+    // get Route to a pin
+    func getRouteTo(coordinate: CLLocationCoordinate2D){
+        let currLoc = manager.location
+        let sourcePM = MKPlacemark(coordinate: coordinate)
+        let tgtPM = MKPlacemark(coordinate: currLoc!.coordinate)
+        let sourceIT = MKMapItem(placemark: sourcePM)
+        let tgtIT = MKMapItem(placemark: tgtPM)
+        let request = MKDirectionsRequest()
+        request.source = sourceIT
+        request.destination = tgtIT
+        request.transportType = .walking
+        var center = coordinate
+        let directions = MKDirections(request: request)
+        directions.calculate(completionHandler: {
+            response, error in
+            guard let response = response else {
+                if error != nil{
+                    print("Something is wrong")
+                    let alertController = UIAlertController(title: "No Route", message: "There is no walking route", preferredStyle: .alert)
+                    let defaultAction = UIAlertAction(title: "Got It", style: .default, handler: nil)
+                    alertController.addAction(defaultAction)
+                    self.present(alertController, animated: true, completion: nil)
+                }
+                return
+            }
+            let route = response.routes[0]
+            self.mapView.add(route.polyline, level: .aboveRoads)
+            self.pathOnView = route.polyline
+            var routeRegion = route.polyline.boundingMapRect
+            center = route.polyline.coordinate
+            routeRegion.size.height = routeRegion.size.height * 1.2
+            routeRegion.size.width = routeRegion.size.width * 1.2
+            self.mapView.setVisibleMapRect(routeRegion, animated: true)
+            self.shrinkView()
+        })
+        let handle = self.setTimeout(3.0, block: { () -> Void in
+            self.mapView.setCenter(center, animated: true)
+        })
+    }
+    
+    func shrinkView(){
+        tabBarController?.tabBar.isHidden = true
+    }
+    
+    func setTimeout(_ delay:TimeInterval, block:@escaping ()->Void) -> Timer {
+        return Timer.scheduledTimer(timeInterval: delay, target: BlockOperation(block: block), selector: #selector(Operation.main), userInfo: nil, repeats: false)
+    }
+
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(overlay: overlay)
+        renderer.strokeColor = UIColor(hex: activeCategory.color)
+        renderer.lineWidth = 4.0
+        
+        return renderer
+    }
+    
 }
+

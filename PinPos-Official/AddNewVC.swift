@@ -49,6 +49,7 @@ class AddNewVC: UIViewController {
         hideKeyboardWhenTappedAround()
     }
     
+    
     func populateRealm(){
         let cats = realm.objects(Category.self)
         anyCategory = cats.first!

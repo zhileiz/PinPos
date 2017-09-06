@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 import Hue
 import SwiftIcons
 import RealmSwift
@@ -43,6 +44,16 @@ class ListVC: UITableViewController {
         for p in plx{
             print(p.name)
             self.places.append(p)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let place = places[indexPath.row]
+        let coordinate = CLLocationCoordinate2D(latitude: place.latitude, longitude: place.longitude)
+        if let mapVC = tabBarController?.customizableViewControllers?[0] as? MapVC{
+            mapVC.mapView.setCenter(coordinate, animated: true)
+            self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[0]
+            mapVC.getRouteTo(coordinate: coordinate)
         }
     }
 

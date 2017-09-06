@@ -287,7 +287,7 @@
             <objects>
                 <navigationController id="O11-Sx-gXt" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="List" id="cQZ-T1-yiH"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="qyn-7O-9dT">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="qyn-7O-9dT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
