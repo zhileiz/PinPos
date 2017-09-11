@@ -17,6 +17,7 @@ class ListVC: UITableViewController {
     
     let realm = try! Realm()
     var places = [Place]()
+    var categories = [Category]()
 
     @IBAction func addNew(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: "addNew", sender: sender)
@@ -35,6 +36,7 @@ class ListVC: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.barTintColor = UIColor(hex: "1364A5")
         populatePlace()
+        populateCategories()
         tableView.reloadData()
     }
     
@@ -47,13 +49,30 @@ class ListVC: UITableViewController {
         }
     }
     
+    func populateCategories(){
+        self.categories.removeAll()
+        let cats = realm.objects(Category.self)
+        for cat in cats{
+            print(cat.name)
+            self.categories.append(cat)
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let place = places[indexPath.row]
+        var category = Category()
+        for cat in categories{
+            if cat.name == place.categoryName{
+                category = cat
+                break
+            }
+        }
         let coordinate = CLLocationCoordinate2D(latitude: place.latitude, longitude: place.longitude)
         if let mapVC = tabBarController?.customizableViewControllers?[0] as? MapVC{
+            mapVC.activeCategory = category
             mapVC.mapView.setCenter(coordinate, animated: true)
             self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[0]
-            mapVC.getRouteTo(coordinate: coordinate)
+            mapVC.getRouteTo(coordinate: coordinate, name: place.name)
         }
     }
 

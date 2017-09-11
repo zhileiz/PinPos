@@ -17,6 +17,9 @@ import DZNEmptyDataSet
 
 class MapVC: UIViewController {
 
+    @IBOutlet weak var btnGrpView: UIView!
+    @IBOutlet weak var navigateBtn: UIButton!
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var choiceView: UIView!
     @IBOutlet weak var categoryTable: UITableView!
@@ -29,6 +32,7 @@ class MapVC: UIViewController {
     var activeCategory = Category()
     
     var pathOnView:MKOverlay?
+    var destination:MKMapItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +45,7 @@ class MapVC: UIViewController {
         configureLocationServices()
         addMarkers()
         activeCategory = category
+        btnGroupLayout()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -158,7 +163,7 @@ extension MapVC:MKMapViewDelegate {
             if pathOnView != nil {
                 mapView.remove(pathOnView!)
             }
-            getRouteTo(coordinate: (view.annotation?.coordinate)!)
+            getRouteTo(coordinate: (view.annotation?.coordinate)!, name: (view.annotation?.title!)!)
         }
     }
     
@@ -214,7 +219,11 @@ extension MapVC:UITableViewDelegate{
             tempView.setUpByCategory(cat: cat)
         }
         categoryTable.isHidden = true
+        btnGrpView.backgroundColor = UIColor(hex:cat.color)
         addMarkers()
+        if pathOnView != nil {
+            jumpBack()
+        }
     }
     
 }
@@ -282,7 +291,7 @@ extension MapVC {
     }
     
     // get Route to a pin
-    func getRouteTo(coordinate: CLLocationCoordinate2D){
+    func getRouteTo(coordinate: CLLocationCoordinate2D, name: String){
         let currLoc = manager.location
         let sourcePM = MKPlacemark(coordinate: coordinate)
         let tgtPM = MKPlacemark(coordinate: currLoc!.coordinate)
@@ -309,6 +318,8 @@ extension MapVC {
             let route = response.routes[0]
             self.mapView.add(route.polyline, level: .aboveRoads)
             self.pathOnView = route.polyline
+            self.destination = sourceIT
+            self.destination?.name = name
             var routeRegion = route.polyline.boundingMapRect
             center = route.polyline.coordinate
             routeRegion.size.height = routeRegion.size.height * 1.2
@@ -318,6 +329,7 @@ extension MapVC {
         })
         let handle = self.setTimeout(3.0, block: { () -> Void in
             self.mapView.setCenter(center, animated: true)
+            self.btnGrpView.isHidden = false
         })
     }
     
@@ -335,6 +347,68 @@ extension MapVC {
         renderer.lineWidth = 4.0
         
         return renderer
+    }
+    
+    func btnGroupLayout(){
+        btnGrpView.backgroundColor = UIColor(hex: activeCategory.color)
+        btnGrpView.snp.makeConstraints{(make) -> Void in
+            make.width.equalTo(220)
+            make.centerX.equalTo(mapView)
+            make.bottom.equalTo(mapView).offset(-40)
+            make.height.equalTo(50)
+        }
+        btnGrpView.layer.cornerRadius = 3
+        navigateBtn.setIcon(icon: .ionicons(.navigate), iconSize: 25, color: .white, forState: .normal)
+        navigateBtn.addTarget(self, action: #selector(jumpToNavigation), for: .touchUpInside)
+        navigateBtn.snp.makeConstraints{(make)->Void in
+            make.left.equalTo(btnGrpView).offset(50)
+            make.top.equalTo(btnGrpView).offset(5)
+            make.width.height.equalTo(25)
+        }
+        navigateBtn.titleLabel?.text = ""
+        let navLabel = UILabel()
+        navLabel.text = "Go"
+        navLabel.textColor = .white
+        navLabel.textAlignment = .center
+        navLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 12)
+        btnGrpView.addSubview(navLabel)
+        navLabel.snp.makeConstraints{(make) -> Void in
+            make.centerX.equalTo(navigateBtn)
+            make.width.equalTo(120)
+            make.bottom.equalTo(btnGrpView).offset(0)
+        }
+        backBtn.setIcon(icon: .ionicons(.arrowReturnLeft), iconSize: 25, color: .white, forState: .normal)
+        backBtn.addTarget(self, action: #selector(jumpBack), for: .touchUpInside)
+        backBtn.snp.makeConstraints{(make)->Void in
+            make.right.equalTo(btnGrpView).offset(-50)
+            make.top.equalTo(btnGrpView).offset(5)
+            make.width.height.equalTo(25)
+        }
+        let backLabel = UILabel()
+        backLabel.text = "Back"
+        backLabel.textColor = .white
+        backLabel.textAlignment = .center
+        backLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 12)
+        btnGrpView.addSubview(backLabel)
+        backLabel.snp.makeConstraints{(make) -> Void in
+            make.centerX.equalTo(backBtn)
+            make.width.equalTo(120)
+            make.bottom.equalTo(btnGrpView).offset(0)
+        }
+        btnGrpView.isHidden = true;
+    }
+    
+    func jumpToNavigation(){
+        print("To Apple Map")
+        let options = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeWalking]
+        destination!.openInMaps(launchOptions: options)
+    }
+    
+    func jumpBack(){
+        btnGrpView.isHidden = true
+        tabBarController?.tabBar.isHidden = false
+        
+        mapView.remove(pathOnView!)
     }
     
 }

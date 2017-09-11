@@ -62,14 +62,34 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gTN-MO-OGz">
+                                <rect key="frame" x="67" y="381" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tmZ-ds-2rb">
+                                        <rect key="frame" x="41" y="49" width="46" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pDa-K7-DQP">
+                                        <rect key="frame" x="146" y="49" width="46" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" id="avH-ts-jwK"/>
                     <connections>
+                        <outlet property="backBtn" destination="pDa-K7-DQP" id="G8g-zv-slm"/>
+                        <outlet property="btnGrpView" destination="gTN-MO-OGz" id="BrI-fy-t73"/>
                         <outlet property="categoryTable" destination="scd-Mu-lAz" id="wOx-eV-Tmj"/>
                         <outlet property="choiceView" destination="34K-Ug-n12" id="kLZ-dH-XE7"/>
                         <outlet property="mapView" destination="VAC-5A-ZTH" id="eXe-5S-xCe"/>
+                        <outlet property="navigateBtn" destination="tmZ-ds-2rb" id="StN-vb-hOw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -287,7 +307,7 @@
             <objects>
                 <navigationController id="O11-Sx-gXt" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="List" id="cQZ-T1-yiH"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="qyn-7O-9dT">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="qyn-7O-9dT">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
